@@ -25,8 +25,8 @@ class Login extends React.Component{
         //authenticate user based on credentials
         //server will authenticate that token
             .post("http://localhost:5000/api/login", this.state.credentials)//http://localhost:5000/api/login
-            .then(res => console.log(res))
             .then(res => {
+                console.log(res.data)
                 localStorage.setItem("token", (res.data.payload))
                 this.props.history.push('/protected');
             })

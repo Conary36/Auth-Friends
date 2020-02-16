@@ -1,45 +1,43 @@
-import React from 'react'
-// import moment from 'moment'
-// import Loader  from 'react-loader-spinner';
+import React, {useState, useEffect } from 'react';
 import { axiosWithAuth } from '../utilities/axiosWithAuth'
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+import { trackPromise } from 'react-promise-tracker';
 
-class FriendsList extends React.Component {
+const FriendsList = () => {
 
-    state = {
-        friendInfo: []
-    };
+        const [friendInfo, setFriendInfo] = useState([]);
+    
+    // componentDidMount(){
+    //     this.getData();
+    // }
 
-    componentDidMount(){
-        this.getData();
-    }
-
-    getData = () => {
+    // trackPromise(
+    useEffect(() => {
         //fetch initial data - but it's protected! Use axiosWithAuth to send the token on the request
         axiosWithAuth()
-            .get('/api/data')
-            .then(res => console.log(res))
+            .get('/api/friends')
+            .then(res => {
+                console.log(res.data)
+                setFriendInfo(res.data);
+
+            })
             .catch(err => console.log(err));
-    }
+        }, [])
+    //)
 
-    //import {helper as help} from './helpers'
-
-    // 
-    render(){
         return(
-            {
-                this.friends.map(i => (
-                    <Col lg="4">
-                        <Card style={DivBack}>
-                            <p>{i.id}</p>
-                            <p>{i.name}</p>
-                            <p>{i.age}</p>
-                            <p>{i.email}</p>
-                        </Card>
-                    </Col>
-                ))
-            }
+            
+                <div>
+                {friendInfo.map(subj => 
+                    <div>
+                        <p>{subj.name}</p>
+                        <p>{subj.age}</p>
+                        <p>{subj.email}</p>
+                    </div>
+                    )}
+                </div>
         )
-    }
+        
 
 }
 
