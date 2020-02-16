@@ -16,7 +16,50 @@ class Login extends React.Component{
                 [e.target.name]: e.target.value
             }
         });
+    };
+
+    login = e => {
+        e.preventDefault();
+        axiosWithAuth()
+        //post request to server
+        //authenticate user based on credentials
+        //server will authenticate that token
+            .post("http://localhost:5000/api/login", this.state.credentials)//http://localhost:5000/api/login
+            .then(res => console.log(res))
+            .then(res => {
+                localStorage.setItem("token", (res.data.payload))
+                this.props.history.push('/protected');
+            })
+            .catch(err => {
+                 localStorage.removeItem('token');
+                console.log('invalid login:', err);
+            })
+    };
+
+    render(){
+        return(
+            <div>
+                <form onSubmit={this.login}>
+                    <input
+                        type='text'
+                        name='username'
+                        value={this.state.credentials.username}
+                        onChange={this.handleChange}
+                        />
+                    <input
+                        type='text'
+                        name='password'
+                        value={this.state.credentials.password}
+                        onChange={this.handleChange}
+                    />
+                    <button>Log in</button>
+
+                </form>
+            
+            </div>
+        )
     }
 
-
 }
+
+export default Login;
