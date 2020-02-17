@@ -24,7 +24,7 @@ const LoadingIndicator = props => {
                     alignItems: "center"
                 }}
             >
-                <Loader timeout={2000} type="Bars" color="#47F7FF" height={80} width={80} />
+                <Loader timeout={4000} type="Bars" color="#47F7FF" height={80} width={80} />
             </div>
         </div>
     );
