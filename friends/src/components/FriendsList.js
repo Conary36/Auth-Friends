@@ -2,6 +2,8 @@ import React, {useState, useEffect } from 'react';
 import { axiosWithAuth } from '../utilities/axiosWithAuth'
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import { trackPromise } from 'react-promise-tracker';
+import LoadingIndicator from '../components/bars';
+
 
 const FriendsList = () => {
 
@@ -11,9 +13,11 @@ const FriendsList = () => {
     //     this.getData();
     // }
 
-    // trackPromise(
-    useEffect(() => {
+    //trackPromise(
+        
+        useEffect(() => {
         //fetch initial data - but it's protected! Use axiosWithAuth to send the token on the request
+    
         axiosWithAuth()
             .get('/api/friends')
             .then(res => {
@@ -22,12 +26,14 @@ const FriendsList = () => {
 
             })
             .catch(err => console.log(err));
-        }, [])
+    
+      }, [])
     //)
 
         return(
             
                 <div>
+                <LoadingIndicator/>
                 {friendInfo.map(subj => 
                     <div>
                         <p>{subj.name}</p>
@@ -42,3 +48,7 @@ const FriendsList = () => {
 }
 
 export default FriendsList;
+
+
+
+
